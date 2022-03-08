@@ -85,22 +85,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    Image(
-                      image: AssetImage('assets/soleado.png'),
+                    const Image(
+                      image: AssetImage('assets/soleado.png'), //this need to change
                       width: 150,
                       height: 150,
                       ),
-                      SizedBox(width: 50,),
+                      const SizedBox(width: 50,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Valdivia, Chile",
+                        children: const [
+                          Text("Valdivia, Chile", //city get from the API
                           style: TextStyle(
                               fontSize: 15,
                             ),
                           ),
-                          Text("24ºC",
+                          Text("24ºC", //temperature get from the API
                           style: TextStyle(
                               fontSize: 60,
                             ),
@@ -116,14 +116,15 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () async{
           final data = await Navigator.push(
             context,MaterialPageRoute(
-              builder: (context) => AddOutfit()
+              builder: (context) => const AddOutfit()
               ),
             );
             setState(() {
+              if(data == null) return;
               decodeFile(data);
             });
         },
@@ -134,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget __gridContent(){
     return Expanded(
       child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3), 
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3), 
         itemBuilder: (context,index) =>
         GridTile(
           child: 
@@ -148,6 +149,5 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void getThumbnail(Outfit outfit){
     this.outfit.add(outfit);
-    print("thumbnail");
   }
 }

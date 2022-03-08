@@ -20,10 +20,10 @@ extends StatefulWidget {
 
 class _AddOutfitState extends State<AddOutfit> {
   
-  List<File?> _photos = [];
+  final List<File?> _photos = [];
   final imagePicker = ImagePicker();
 
-  late Outfit outfit;
+  Outfit? outfit;
 
   String name = "";
   String weather = "";
@@ -31,6 +31,7 @@ class _AddOutfitState extends State<AddOutfit> {
   Future getImage() async{
     final image = await imagePicker.pickImage(source: ImageSource.camera);
     setState(() {
+      if(image == null) return;
       _photos.insert(0,File(image!.path));
     });
   }
@@ -38,23 +39,21 @@ class _AddOutfitState extends State<AddOutfit> {
   void deleteImage(int index){
     setState(() {
       _photos.removeAt(index);
-      print("deleted");
     });
   }
 
   void saveOutfit(){
-    if(_photos.length == 0) return;
+    if(_photos.length == 1) return;
     List<String> _photosbytes = [];
     List<String> _photoPath = [];
     for(var i = 0; i < _photos.length; i++){
       if(_photos[i] == null) break;
-      print("${_photos[i]} is in $i");
       List<int> photoBytes = _photos[i]!.readAsBytesSync();
       _photosbytes.add(base64.encode(photoBytes));
       _photoPath.add(_photos[i]!.path);
     }
     outfit = Outfit(photos: _photosbytes, thumbnail: _photosbytes[0],path: _photoPath, name: name, tag: weather);
-    final outfitJson = outfit.toJson();
+    //final outfitJson = outfit?.toJson();
   }
 
   void readOutfit(){
@@ -71,9 +70,7 @@ class _AddOutfitState extends State<AddOutfit> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    print(_photos.length);
     _photos.add(null);
   }
 
@@ -81,7 +78,7 @@ class _AddOutfitState extends State<AddOutfit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Outfit"),
+        title: const Text("Outfit"),
       ),
       body: Column(
         children: [
@@ -142,14 +139,14 @@ class _AddOutfitState extends State<AddOutfit> {
         ),
         child: Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Image.asset(
               'assets/plus.png',
               width: 60,
               height: 60,
               ),
-              SizedBox(height: 10,),
-            Text("Add a photo", 
+              const SizedBox(height: 10,),
+            const Text("Add a photo", 
               style: TextStyle(
                 fontSize: 17,
               )
@@ -166,19 +163,18 @@ class _AddOutfitState extends State<AddOutfit> {
       onLongPress: (){
         showMenu(
           context: context,
-          position: RelativeRect.fromLTRB(1, 1, 1, 1),
+          position: const RelativeRect.fromLTRB(1, 1, 1, 1), //this need to be on the container
           items: <PopupMenuEntry>[
           PopupMenuItem(
             value: index,
             child: Row(
-              children: <Widget>[
+              children: const <Widget>[
                 Icon(Icons.delete),
                 Text("Delete"),
               ],
             ),
             onTap: () {
               deleteImage(index);
-              print(_photos.length);
             },
           )
         ],
@@ -208,10 +204,8 @@ class _AddOutfitState extends State<AddOutfit> {
 
   Widget __conditionalGrid(int index){
     if(index == _photos.length - 1 || _photos.isEmpty){
-      print("add");
       return __addOutfit();
-    }
-    print("outfit");
+    }    
     return __outfitThumbnail(index);
   }
 }
