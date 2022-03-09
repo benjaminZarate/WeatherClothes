@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:weatherclothes/AddOutfit.dart';
 import 'package:weatherclothes/OutfitCard.dart';
+import 'package:weatherclothes/WeatherPanel.dart';
 
 import 'model/Outfit.dart';
 
@@ -64,53 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 200,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(_radiusContainer),
-                  bottomRight: Radius.circular(_radiusContainer),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    blurRadius: 7,
-                    offset: const Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    const Image(
-                      image: AssetImage('assets/soleado.png'), //this need to change
-                      width: 150,
-                      height: 150,
-                      ),
-                      const SizedBox(width: 50,),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text("Valdivia, Chile", //city get from the API
-                          style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                          Text("24ºC", //temperature get from the API
-                          style: TextStyle(
-                              fontSize: 60,
-                            ),
-                          ),
-                        ],
-                      )
-                  ],
-                ),
-              ),
-            ),
+            WeatherPanel(),
             SizedBox(height:_sizedBoxHeight),
             __gridContent()
           ],

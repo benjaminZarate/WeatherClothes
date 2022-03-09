@@ -32,7 +32,7 @@ class _AddOutfitState extends State<AddOutfit> {
     final image = await imagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       if(image == null) return;
-      _photos.insert(0,File(image!.path));
+      _photos.insert(0,File(image.path));
     });
   }
 

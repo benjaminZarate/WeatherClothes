@@ -32,8 +32,9 @@ dependencies:
   camera: ^0.9.4+14
   path_provider: ^2.0.9
   image_picker: ^0.8.4+10
-  
+  http: ^0.13.4
   json_annotation: ^4.4.0
+  location: ^4.2.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -67,6 +68,10 @@ flutter:
   assets:
     - assets/soleado.png
     - assets/plus.png
+    - assets/cloudy.png
+    - assets/cloudyNight.png
+    - assets/night.png
+    - assets/rainy.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
