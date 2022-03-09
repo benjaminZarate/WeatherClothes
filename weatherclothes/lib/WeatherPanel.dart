@@ -115,45 +115,45 @@ class _WeatherPanelState extends State<WeatherPanel> {
 
   Widget weatherImage(Object data){
     Weather w = data as Weather;
-    if(data.weather == "Partly cloudy"){
-      if(data.isDay == 0){
-        return const Image(image: AssetImage(
-              "assets/cloudyNight.png"),
-              width: 130,
-              height: 130,);
-      }else{
-        return const Image(
-          image: AssetImage("assets/cloudy.png"),
-          width: 150,
-          height: 150,);
+      if(data.weather == "Partly cloudy"){
+        if(data.isDay == 0){
+          return const Image(image: AssetImage(
+                "assets/cloudyNight.png"),
+                width: 130,
+                height: 130,);
+        }else{
+          return const Image(
+            image: AssetImage("assets/cloudy.png"),
+            width: 150,
+            height: 150,);
+        }
       }
-    }
-    else if(data.weather == "Sunny" || data.weather == "Clear"){
-      if(data.isDay == 0){
+      else if(data.weather == "Sunny" || data.weather == "Clear"){
+        if(data.isDay == 0){
+          return const Image(
+            image: AssetImage("assets/night.png"),
+            width: 150,
+            height: 150,);
+        }else{
+          return const Image(
+            image: AssetImage("assets/soleado.png"),
+            width: 150,
+            height: 150,);
+        }
+      }else if(data.weather == "Moderate rain" || data.weather == "Light rain"){
         return const Image(
-          image: AssetImage("assets/night.png"),
-          width: 150,
-          height: 150,);
-      }else{
+            image: AssetImage("assets/rainy.png"),
+            width: 150,
+            height: 150,);
+      }else if(data.weather == "Patchy rain possible"){
         return const Image(
-          image: AssetImage("assets/soleado.png"),
-          width: 150,
-          height: 150,);
+            image: AssetImage("assets/cloudy.png"),
+            width: 150,
+            height: 150,);
       }
-    }else if(data.weather == "Moderate rain" || data.weather == "Light rain"){
-      return const Image(
-          image: AssetImage("assets/rainy.png"),
-          width: 150,
-          height: 150,);
-    }else if(data.weather == "Patchy rain possible"){
-      return const Image(
-          image: AssetImage("assets/cloudy.png"),
-          width: 150,
-          height: 150,);
-    }
-    else{
-      return CircularProgressIndicator();    
-    }
+      else{
+        return CircularProgressIndicator();    
+      }
     }
 
   Widget cityInfo(Object _data){
