@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:weatherclothes/main.dart';
 import 'package:weatherclothes/model/Weather.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
@@ -116,6 +117,7 @@ class _WeatherPanelState extends State<WeatherPanel> {
   Widget weatherImage(Object data){
     Weather w = data as Weather;
       if(data.weather == "Partly cloudy"){
+        MyApp().getWeather("cloudy");
         if(data.isDay == 0){
           return const Image(image: AssetImage(
                 "assets/cloudyNight.png"),
@@ -123,33 +125,44 @@ class _WeatherPanelState extends State<WeatherPanel> {
                 height: 130,);
         }else{
           return const Image(
-            image: AssetImage("assets/cloudy.png"),
-            width: 150,
-            height: 150,);
+            image: AssetImage("assets/partlyCloudy.png"),
+            width: 130,
+            height: 130,);
         }
+      }
+      else if(data.weather == "Overcast"){
+        MyApp().getWeather("cloudy");
+        return const Image(
+            image: AssetImage("assets/cloudy.png"),
+            width: 130,
+            height: 130,);
       }
       else if(data.weather == "Sunny" || data.weather == "Clear"){
         if(data.isDay == 0){
+          MyApp().getWeather("night");
           return const Image(
             image: AssetImage("assets/night.png"),
-            width: 150,
-            height: 150,);
+            width: 130,
+            height: 130,);
         }else{
+          MyApp().getWeather("sunny");
           return const Image(
             image: AssetImage("assets/soleado.png"),
-            width: 150,
-            height: 150,);
+            width: 130,
+            height: 130,);
         }
       }else if(data.weather == "Moderate rain" || data.weather == "Light rain"){
+        MyApp().getWeather("rainy");
         return const Image(
             image: AssetImage("assets/rainy.png"),
-            width: 150,
-            height: 150,);
+            width: 130,
+            height: 130,);
       }else if(data.weather == "Patchy rain possible"){
+        MyApp().getWeather("cloudy");
         return const Image(
             image: AssetImage("assets/cloudy.png"),
-            width: 150,
-            height: 150,);
+            width: 130,
+            height: 130,);
       }
       else{
         return CircularProgressIndicator();    

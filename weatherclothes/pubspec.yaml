@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/soleado.png
     - assets/plus.png
+    - assets/partlyCloudy.png
     - assets/cloudy.png
     - assets/cloudyNight.png
     - assets/night.png

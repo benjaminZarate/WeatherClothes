@@ -14,12 +14,18 @@ extends StatefulWidget {
   
   const AddOutfit({ Key? key }) : super(key: key);
 
+  String weatherTag(String tag){
+    _AddOutfitState().weather = tag;
+    return tag;
+  }
+
   @override
   _AddOutfitState createState() => _AddOutfitState();
 }
 
 class _AddOutfitState extends State<AddOutfit> {
-  
+  final TextEditingController _controller = TextEditingController();
+
   final List<File?> _photos = [];
   final imagePicker = ImagePicker();
 
@@ -54,6 +60,8 @@ class _AddOutfitState extends State<AddOutfit> {
     }
     outfit = Outfit(photos: _photosbytes, thumbnail: _photosbytes[0],path: _photoPath, name: name, tag: weather);
     //final outfitJson = outfit?.toJson();
+    jsonEncode(outfit);
+    
   }
 
   void readOutfit(){
@@ -84,11 +92,13 @@ class _AddOutfitState extends State<AddOutfit> {
         children: [
           Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextFormField(
+          child: TextField(
+            controller: _controller,
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
               labelText: 'Outfit name',
               ),
+              onSubmitted: (value) {name = value;}
             ),
           ),
           const DropdownWeather(),

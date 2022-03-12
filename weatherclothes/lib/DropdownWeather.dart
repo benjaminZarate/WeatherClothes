@@ -15,7 +15,6 @@ class _DropdownWeatherState extends State<DropdownWeather> {
       DropdownMenuItem(child: Text("Cloudy"),value: "cloudy"),
       DropdownMenuItem(child: Text("Sunny"),value: "sunny"),
       DropdownMenuItem(child: Text("Rainy"),value: "rainy"),
-      DropdownMenuItem(child: Text("Warm"),value: "warm"),
       DropdownMenuItem(child: Text("Night"),value: "night"),
       DropdownMenuItem(child: Text("Rainy Night"),value: "rainyNight"),
     ];
@@ -37,7 +36,7 @@ class _DropdownWeatherState extends State<DropdownWeather> {
         onChanged: (String? value){
           setState(() {
             _selectedValue = value!;
-            
+            AddOutfit().weatherTag(_selectedValue);
           });
         },
       ),
