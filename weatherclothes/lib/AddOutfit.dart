@@ -15,7 +15,6 @@ extends StatefulWidget {
   const AddOutfit({ Key? key }) : super(key: key);
 
   String weatherTag(String tag){
-    _AddOutfitState().weather = tag;
     return tag;
   }
 
@@ -33,6 +32,18 @@ class _AddOutfitState extends State<AddOutfit> {
 
   String name = "";
   String weather = "";
+
+  List<DropdownMenuItem<String>> get dropdownItems{
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("Cloudy"),value: "cloudy"),
+      DropdownMenuItem(child: Text("Sunny "),value: "sunny"),
+      DropdownMenuItem(child: Text("Rainy "),value: "rainy"),
+      DropdownMenuItem(child: Text("Night "),value: "night"),
+      DropdownMenuItem(child: Text("Rainy Night"),value: "rainyNight"),
+    ];
+    return menuItems;
+  }
+  String _selectedValue = "sunny";
 
   Future getImage() async{
     final image = await imagePicker.pickImage(source: ImageSource.camera);
@@ -101,8 +112,25 @@ class _AddOutfitState extends State<AddOutfit> {
               onSubmitted: (value) {name = value;}
             ),
           ),
-          const DropdownWeather(),
-          __gridContent()
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButtonFormField(
+              decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            value: _selectedValue,
+            items: dropdownItems,
+            onChanged: (String? value){
+              setState(() {
+                _selectedValue = value!;
+                weather = _selectedValue;
+              });
+            },
+          ),
+        ),
+        __gridContent()
         ],
       ),
       floatingActionButton: FloatingActionButton(

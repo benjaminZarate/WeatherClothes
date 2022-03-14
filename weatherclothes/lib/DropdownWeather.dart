@@ -13,9 +13,9 @@ class _DropdownWeatherState extends State<DropdownWeather> {
   List<DropdownMenuItem<String>> get dropdownItems{
     List<DropdownMenuItem<String>> menuItems = [
       DropdownMenuItem(child: Text("Cloudy"),value: "cloudy"),
-      DropdownMenuItem(child: Text("Sunny"),value: "sunny"),
-      DropdownMenuItem(child: Text("Rainy"),value: "rainy"),
-      DropdownMenuItem(child: Text("Night"),value: "night"),
+      DropdownMenuItem(child: Text("Sunny "),value: "sunny"),
+      DropdownMenuItem(child: Text("Rainy "),value: "rainy"),
+      DropdownMenuItem(child: Text("Night "),value: "night"),
       DropdownMenuItem(child: Text("Rainy Night"),value: "rainyNight"),
     ];
     return menuItems;

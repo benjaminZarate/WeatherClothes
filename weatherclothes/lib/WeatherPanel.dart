@@ -1,74 +1,16 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:weatherclothes/main.dart';
 import 'package:weatherclothes/model/Weather.dart';
-import 'package:http/http.dart' as http;
-import 'package:location/location.dart';
 
 class WeatherPanel extends StatefulWidget {
-  const WeatherPanel({ Key? key }) : super(key: key);
+  WeatherPanel({ Key? key, required this.location}) : super(key: key);
+
+  Future<Weather> location;
 
   @override
   _WeatherPanelState createState() => _WeatherPanelState();
 }
 
 class _WeatherPanelState extends State<WeatherPanel> {
-
-  double lat = 0;
-  double lon = 0;
-
-  Future<Weather> getLocation()async {
-    Location location = new Location();
-
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      // if (!_serviceEnabled) {
-      //   return;
-      // }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      // if (_permissionGranted != PermissionStatus.granted) {
-      //   return;
-      // }
-    }
-    _locationData = await location.getLocation();
-    lat = _locationData.latitude!;
-    lon = _locationData.longitude!;
-    var url = Uri.parse('http://api.weatherapi.com/v1/current.json?key=f2b367d7f09643298a632009220803&q=$lat,$lon&aqi=no');
-    final response = await http.get(url); 
-    Weather _weather;
-
-    if(response.statusCode == 200){
-      String body = utf8.decode(response.bodyBytes);
-
-      final jsonData = jsonDecode(body);
-      _weather = Weather(
-        jsonData["location"]["name"].toString(),
-        jsonData["location"]["country"].toString(),
-        "${jsonData["current"]["temp_c"].toString().split('.')[0]}ºC",
-        jsonData["current"]["condition"]["text"].toString(),
-        int.parse(jsonData["current"]["is_day"].toString())
-      );
-      return _weather;
-    }else{
-      throw Exception("response failed");
-    }
-  }
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getLocation();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +33,7 @@ class _WeatherPanelState extends State<WeatherPanel> {
                 ],
               ),
                 child: FutureBuilder(
-                  future: getLocation(),
+                  future: widget.location,
                   builder: (context, snapshot) {
                     if(snapshot.hasData){
                       return Padding(
@@ -105,9 +47,9 @@ class _WeatherPanelState extends State<WeatherPanel> {
                       ),
                     );
                   }else if(snapshot.hasError){
-                      return Text("Error");
+                      return const Text("Error");
                   }
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 },  
                 ),
               );
@@ -116,8 +58,7 @@ class _WeatherPanelState extends State<WeatherPanel> {
 
   Widget weatherImage(Object data){
     Weather w = data as Weather;
-      if(data.weather == "Partly cloudy"){
-        MyApp().getWeather("cloudy");
+      if(data.weather == "partly cloudy"){
         if(data.isDay == 0){
           return const Image(image: AssetImage(
                 "assets/cloudyNight.png"),
@@ -130,42 +71,37 @@ class _WeatherPanelState extends State<WeatherPanel> {
             height: 130,);
         }
       }
-      else if(data.weather == "Overcast"){
-        MyApp().getWeather("cloudy");
+      else if(data.weather == "overcast"){
         return const Image(
             image: AssetImage("assets/cloudy.png"),
             width: 130,
             height: 130,);
       }
-      else if(data.weather == "Sunny" || data.weather == "Clear"){
+      else if(data.weather == "sunny" || data.weather == "clear"){
         if(data.isDay == 0){
-          MyApp().getWeather("night");
           return const Image(
             image: AssetImage("assets/night.png"),
             width: 130,
             height: 130,);
         }else{
-          MyApp().getWeather("sunny");
           return const Image(
             image: AssetImage("assets/soleado.png"),
             width: 130,
             height: 130,);
         }
-      }else if(data.weather == "Moderate rain" || data.weather == "Light rain"){
-        MyApp().getWeather("rainy");
+      }else if(data.weather == "moderate rain" || data.weather == "light rain"){
         return const Image(
             image: AssetImage("assets/rainy.png"),
             width: 130,
             height: 130,);
-      }else if(data.weather == "Patchy rain possible"){
-        MyApp().getWeather("cloudy");
+      }else if(data.weather == "patchy rain possible"){
         return const Image(
             image: AssetImage("assets/cloudy.png"),
             width: 130,
             height: 130,);
       }
       else{
-        return CircularProgressIndicator();    
+        return const CircularProgressIndicator();    
       }
     }
 

@@ -10,7 +10,7 @@ class Outfit{
   List<String> path;
   String thumbnail;
   String name;
-  String tag;
+  String tag = "sunny";
   
   Outfit({required this.photos,required this. thumbnail,required this.path, required this.name, required this.tag});
 
