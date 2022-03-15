@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:weatherclothes/AddOutfit.dart';
+import 'package:weatherclothes/AllOutfit.dart';
 import 'package:weatherclothes/OutfitGrid.dart';
 import 'package:weatherclothes/WeatherPanel.dart';
 import 'package:http/http.dart' as http;
@@ -124,6 +125,17 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        leading: GestureDetector(
+          child: Icon(Icons.dry_cleaning),
+          onTap: (){
+            Navigator.push(
+              context, 
+              MaterialPageRoute(
+                builder: (context) => AllOutfits(outfits: outfitList)
+                )
+              );
+          },
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

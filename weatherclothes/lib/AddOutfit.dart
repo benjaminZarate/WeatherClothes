@@ -38,8 +38,6 @@ class _AddOutfitState extends State<AddOutfit> {
       DropdownMenuItem(child: Text("Cloudy"),value: "cloudy"),
       DropdownMenuItem(child: Text("Sunny "),value: "sunny"),
       DropdownMenuItem(child: Text("Rainy "),value: "rainy"),
-      DropdownMenuItem(child: Text("Night "),value: "night"),
-      DropdownMenuItem(child: Text("Rainy Night"),value: "rainyNight"),
     ];
     return menuItems;
   }
