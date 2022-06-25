@@ -1,13 +1,9 @@
 import 'dart:convert';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:weatherclothes/DropdownWeather.dart';
 import 'package:weatherclothes/model/Outfit.dart';
 import "dart:io";
-
-import 'OutfitCard.dart';
 
 class AddOutfit 
 extends StatefulWidget {
